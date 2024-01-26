@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_todo_task" model="ir.actions.report">
+        <field name="name">Task Report</field>
+        <field name="model">todo.tasks</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">todo_management.template_todo_task</field>
+        <field name="report_file">todo_management.template_todo_task</field>
+        <field name="binding_model_id" ref="model_todo_tasks"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="template_todo_task">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <link rel="stylesheet" type="text/css" href="/todo_management/static/src/css/report.css"/>
+                    <table class="table-style">
+                        <tr>
+                            <th class="task-color fw-bold">TASK:</th>
+                            <td>
+                                <t t-esc="o.name"></t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Due Date:</th>
+                            <td>
+                                <t t-esc="o.due_date"></t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Assign To:</th>
+                            <td>
+                                <t t-esc="o.assign_to.name"></t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Estimated Time:</th>
+                            <td>
+                                <t t-esc="o.estimated_time"></t>
+                                H
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="description-style">
+                        <p class="description-title">Description:</p>
+                        <p class="description-body">
+                            <t t-esc="o.description"></t>
+                        </p>
+                    </div>
+                    <table class="oe_list_content table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th colspan="4">Time Sheet</th>
+                            </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="o.time_sheet"/>
+                            <t t-foreach="range(len(lines))" t-as="index">
+                                <tr>
+                                    <td>
+                                        <t t-esc="index + 1"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="lines[index].task_time"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="lines[index].description"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="lines[index].hours"/>
+                                        H
+                                    </td>
+
+                                </tr>
+                                <t t-if="index+1 == len(lines)">
+                                    <tr >
+                                    <th colspan="3">
+                                        Total Time
+                                    </th>
+                                    <td colspan="1">
+                                        <t t-esc="o.total_hours"></t>
+                                        h
+                                    </td>
+                                </tr>
+                                </t>
+
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+
+            </t>
+        </t>
+    </template>
+</odoo>

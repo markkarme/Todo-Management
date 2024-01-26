@@ -1,0 +1,25 @@
+.table-style {
+    border: 0px solid #fff !important;
+    margin-top: 10px; /* Adjust as needed */
+}
+.table-style th, .table-style td {
+    border: 0px solid #fff !important;
+    padding: 8px;
+    text-align: left;
+
+}
+.table-style th{
+    font-size: 20px !important;
+    font-weight: 1000 !important;
+}
+
+.description-style {
+    padding: 8px;
+}
+.description-title {
+    font-size: 20px !important;
+    font-weight: 1000 !important;
+}
+.description-body{
+    font-size: 18px !important;
+}
